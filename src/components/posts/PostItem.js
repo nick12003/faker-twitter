@@ -5,6 +5,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useCurrentUser from '@/hooks/useCurrentUser';
+import useLike from '@/hooks/useLike';
 
 import Avatar from '../Avatar';
 
@@ -13,6 +14,7 @@ const PostItem = ({ data = {}, userId }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
+  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
 
   const goToUser = useCallback(
     (event) => {
@@ -33,8 +35,10 @@ const PostItem = ({ data = {}, userId }) => {
       if (!currentUser) {
         return loginModal.onOpen();
       }
+
+      toggleLike();
     },
-    [loginModal, currentUser]
+    [loginModal, currentUser, toggleLike]
   );
 
   const createdAt = useMemo(() => {
@@ -116,7 +120,8 @@ const PostItem = ({ data = {}, userId }) => {
                 hover:text-red-500
             "
             >
-              <AiFillHeart color={'red'} size={20} />
+              {hasLiked && <AiFillHeart color="red" size={20} />}
+              {!hasLiked && <AiOutlineHeart size={20} />}
               <p>{data.likedIds.length}</p>
             </div>
           </div>
