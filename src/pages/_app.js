@@ -3,8 +3,9 @@ import { Toaster } from 'react-hot-toast';
 import { SessionProvider } from 'next-auth/react';
 
 import Layout from '@/components/Layout';
-import RegisterModal from '@/components/Layout/modals/RegisterModal';
-import LoginModal from '@/components/Layout/modals/LoginModal';
+import RegisterModal from '@/components/modals/RegisterModal';
+import LoginModal from '@/components/modals/LoginModal';
+import EditModal from '@/components/modals/EditModal';
 import nextI18nConfig from '../../next-i18next.config';
 import '@/styles/globals.css';
 
@@ -14,6 +15,7 @@ function App({ Component, pageProps }) {
       <Toaster />
       <RegisterModal />
       <LoginModal />
+      <EditModal />
       <Layout>
         <Component {...pageProps} />
       </Layout>
