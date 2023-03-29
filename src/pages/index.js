@@ -1,5 +1,8 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import Form from '@/components/Form';
+import PostFeed from '@/components/posts/PostFeed';
+
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
@@ -9,5 +12,10 @@ export const getStaticProps = async ({ locale }) => {
 };
 
 export default function Home() {
-  return <div className=" text-3xl text-sky-500">12123</div>;
+  return (
+    <>
+      <Form placeholder="What's happening?" />
+      <PostFeed />
+    </>
+  );
 }
