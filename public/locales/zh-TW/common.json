@@ -1,1 +1,58 @@
-{}
+{
+  "tweetBtn": "推文",
+  "signInBtn": "登入",
+  "registerBtn": "註冊",
+  "saveBtn": "儲存",
+  "followBtn": "跟隨",
+  "unFollowBtn": "取消跟隨",
+  "nav": {
+    "home": "首頁",
+    "notifications": "通知",
+    "profile": "個人資料",
+    "tweet": "推文",
+    "logout": "登出"
+  },
+  "message": {
+    "updated": "修改成功",
+    "loggedIn": "登入成功",
+    "created": "註冊成功",
+    "tweeted": "推文成功",
+    "followed": "追隨成功",
+    "liked": "按讚成功",
+    "error": "不明錯誤"
+  },
+  "modal": {
+    "loginTitle": "登入",
+    "registerTitle": "建立一個帳號",
+    "editTitle": "編輯你的個人資訊",
+    "emailPlaceholder": "電子郵件",
+    "namePlaceholder": "名稱",
+    "usernamePlaceholder": "暱稱",
+    "passwordPlaceholder": "密碼",
+    "profileImagePlaceholder": "上傳你的頭像",
+    "coverImagePlaceholder": "上傳你的背景",
+    "bioPlaceholder": "個人簡介",
+    "uploadImgAlt": "上傳圖片",
+    "firstUsing": "還沒有帳號嗎？",
+    "createAccount": "建立一個帳號",
+    "alreadyAccount": "已經有帳號了？",
+    "signIn": "登入"
+  },
+  "notifications": {
+    "empty": "沒有通知"
+  },
+  "post": {
+    "welcome": "歡迎使用Twitter",
+    "tweetPlaceholder": "有什麼新鮮事？",
+    "replyPlaceholder": "推你的回覆"
+  },
+  "profile": {
+    "edit": "編輯",
+    "joined": "已加入",
+    "following": "個跟隨中",
+    "followers": "位跟隨者"
+  },
+  "follow": {
+    "who2Follow": "跟隨誰"
+  }
+}

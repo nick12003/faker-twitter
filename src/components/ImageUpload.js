@@ -1,8 +1,10 @@
-import Image from 'next/image';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import { useDropzone } from 'react-dropzone';
+import Image from 'next/image';
 
 const ImageUpload = ({ onChange, label, value, disabled }) => {
+  const { t } = useTranslation(['common']);
   const [base64, setBase64] = useState(value);
 
   const handleChange = useCallback(
@@ -38,17 +40,16 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
   return (
     <div
       {...getRootProps({
-        className:
-          'w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700',
+        className: 'w-full p-4 text-center border-2 border-dotted rounded-md border-color',
       })}
     >
       <input {...getInputProps()} />
       {base64 ? (
         <div className="flex items-center justify-center">
-          <Image src={base64} height="100" width="100" alt="Uploaded image" />
+          <Image src={base64} height="100" width="100" alt={t('modal.uploadImgAlt')} />
         </div>
       ) : (
-        <p className="text-white">{label}</p>
+        <p>{label}</p>
       )}
     </div>
   );

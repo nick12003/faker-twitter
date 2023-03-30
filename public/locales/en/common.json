@@ -1,1 +1,58 @@
-{}
+{
+  "tweetBtn": "Tweet",
+  "signInBtn": "Sign in",
+  "registerBtn": "Register",
+  "saveBtn": "Save",
+  "followBtn": "Follow",
+  "unFollowBtn": "UnFollow",
+  "nav": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "tweet": "Tweet",
+    "logout": "Logout"
+  },
+  "message": {
+    "updated": "Updated",
+    "loggedIn": "Logged in",
+    "created": "Account created",
+    "tweeted": "Tweet created",
+    "followed": "Followed",
+    "liked": "Liked",
+    "error": "Something went wrong"
+  },
+  "modal": {
+    "loginTitle": "Login",
+    "registerTitle": "Create an account",
+    "editTitle": "Edit your profile",
+    "emailPlaceholder": "Email",
+    "namePlaceholder": "Name",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "profileImagePlaceholder": "Upload profile image",
+    "coverImagePlaceholder": "Upload cover image",
+    "bioPlaceholder": "Bio",
+    "uploadImgAlt": "Uploaded image",
+    "firstUsing": "First time using Twitter？",
+    "createAccount": "Create an account",
+    "alreadyAccount": "Already have an account？",
+    "signIn": "Sign in"
+  },
+  "notifications": {
+    "empty": "No notifications"
+  },
+  "post": {
+    "welcome": "Welcome to Twitter",
+    "tweetPlaceholder": "What's happening？",
+    "replyPlaceholder": "Tweet your reply"
+  },
+  "profile": {
+    "edit": "Edit",
+    "joined": "Joined",
+    "following": "Following",
+    "followers": "Followers"
+  },
+  "follow": {
+    "who2Follow": "Who to follow"
+  }
+}

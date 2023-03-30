@@ -1,27 +1,27 @@
-const Button = ({ label, secondary, fullWidth, onClick, large, disabled, outline }) => {
+import classNames from 'classnames';
+
+const buttonType = {
+  primary: 'text-white dark:text-white bg-primary',
+  second: 'text-white dark:text-black bg-black dark:bg-white',
+  outline: 'text-black bg-white border-2 border-color',
+};
+
+const Button = ({ label, type, fullWidth, onClick, large, disabled, className }) => {
+  const typeStyled = buttonType[type] ?? buttonType.second;
+
   return (
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`
-        disabled:opacity-70
-        disabled:cursor-not-allowed
-        rounded-full
-        font-semibold
-        hover:opacity-80
-        transition
-        border-2
+      className={classNames(
+        `disabled:opacity-70 disabled:cursor-not-allowed
+        rounded-full font-semibold hover:opacity-80 transition
         ${fullWidth ? 'w-full' : 'w-fit'}
-        ${secondary ? 'bg-white' : 'bg-sky-500'}
-        ${secondary ? 'text-black' : 'text-white'}
-        ${secondary ? 'border-black' : 'border-sky-500'}
-        ${large ? 'text-xl' : 'text-md'}
-        ${large ? 'px-5' : 'px-4'}
-        ${large ? 'py-3' : 'py-2'}
-        ${outline ? 'bg-transparent' : ''}
-        ${outline ? 'border-white' : ''}
-        ${outline ? 'text-white' : ''}
-      `}
+        ${large ? 'px-5 py-3 text-xl' : 'px-4 py-2 text-md'}
+      `,
+        typeStyled,
+        className
+      )}
     >
       {label}
     </button>

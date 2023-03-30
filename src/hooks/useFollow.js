@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 import useCurrentUser from './useCurrentUser';
@@ -7,6 +8,7 @@ import useLoginModal from './useLoginModal';
 import useUser from './useUser';
 
 const useFollow = (userId) => {
+  const { t } = useTranslation(['common']);
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(userId);
 
@@ -36,9 +38,9 @@ const useFollow = (userId) => {
       mutateCurrentUser();
       mutateFetchedUser();
 
-      toast.success('Success');
+      toast.success(t('message.followed'));
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error(t('message.error'));
     }
   }, [currentUser, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal]);
 

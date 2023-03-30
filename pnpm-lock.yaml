@@ -15,6 +15,8 @@ specifiers:
   next: 13.2.4
   next-auth: ^4.20.1
   next-i18next: ^13.2.2
+  next-themes: ^0.2.1
+  nprogress: ^0.2.0
   postcss: ^8.4.21
   react: 18.2.0
   react-dom: 18.2.0
@@ -41,6 +43,8 @@ dependencies:
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.20.1_ld2jel3hspngo3u5lti2kgl2sq
   next-i18next: 13.2.2_dt4g7v76vmr3y5vqc353t2czpa
+  next-themes: 0.2.1_ld2jel3hspngo3u5lti2kgl2sq
+  nprogress: 0.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-dropzone: 14.2.3_react@18.2.0
@@ -2077,6 +2081,18 @@ packages:
       react-i18next: 12.2.0_2rh65uwnd6kial3dj4kteywnti
     dev: false
 
+  /next-themes/0.2.1_ld2jel3hspngo3u5lti2kgl2sq:
+    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 13.2.4_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /next/13.2.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==}
     engines: {node: '>=14.6.0'}
@@ -2169,6 +2185,10 @@ packages:
       console-control-strings: 1.1.0
       gauge: 3.0.2
       set-blocking: 2.0.0
+    dev: false
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
 
   /oauth/0.9.15:

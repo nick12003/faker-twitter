@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+
+import IconButton from './IconButton';
+import { FaLanguage } from 'react-icons/fa';
 
 const LanguageSwitch = ({ className }) => {
   const { pathname, query, locale } = useRouter();
@@ -12,18 +14,14 @@ const LanguageSwitch = ({ className }) => {
       locale={locale === 'en' ? 'zh-TW' : 'en'}
       href={{ pathname, query }}
     >
-      {locale === 'zh-TW' && 'EN'}
-      {locale === 'en' && '中文'}
+      <IconButton>
+        <FaLanguage />
+      </IconButton>
+
+      {/* {locale === 'zh-TW' && 'EN'}
+      {locale === 'en' && '中文'} */}
     </Link>
   );
-};
-
-LanguageSwitch.defaultProps = {
-  classNames: '',
-};
-
-LanguageSwitch.propTypes = {
-  classNames: PropTypes.string,
 };
 
 export default LanguageSwitch;

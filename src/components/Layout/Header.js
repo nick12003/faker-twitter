@@ -1,30 +1,66 @@
-import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { BiArrowBack } from 'react-icons/bi';
 
-const Header = ({ showBackArrow, label }) => {
+import useUser from '@/hooks/useUser';
+
+import LanguageSwitch from '../LanguageSwitch';
+import ThemeSwitch from '../ThemeSwitch';
+
+const labelMap = [
+  {
+    path: '/',
+    showBackArrow: false,
+    label: 'nav.home',
+  },
+  {
+    path: '/notifications',
+    showBackArrow: true,
+    label: 'nav.notifications',
+  },
+  {
+    path: '/users/[userId]',
+    showBackArrow: true,
+  },
+  {
+    path: '/posts/[postId]',
+    showBackArrow: true,
+    label: 'nav.tweet',
+  },
+];
+
+const Header = () => {
+  const { t } = useTranslation(['common']);
   const router = useRouter();
+
+  const { userId } = router.query;
+
+  const { data: fetchedUser } = useUser(userId);
+
+  const labelInfo = labelMap.find((info) => info.path === router.pathname);
 
   const handleBack = useCallback(() => {
     router.back();
   }, [router]);
 
   return (
-    <div className="border-b-[1px] border-neutral-800 p-5">
-      <div className="flex flex-row items-center gap-2">
-        {showBackArrow && (
+    <div className="border-b-[1px] border-color backdrop-blur p-5 sticky top-0 z-10">
+      <div className="flex flex-row items-center justify-between gap-2">
+        {labelInfo.showBackArrow && (
           <BiArrowBack
             onClick={handleBack}
-            color="white"
             size={20}
-            className="
-              cursor-pointer 
-              hover:opacity-70 
-              transition
-          "
+            className="cursor-pointer hover:opacity-70 transition"
           />
         )}
-        <h1 className="text-white text-xl font-semibold">{label}</h1>
+        <h1 className="text-xl font-semibold">
+          {labelInfo.label ? t(labelInfo.label) : fetchedUser?.name}
+        </h1>
+        <div className="ml-auto">
+          <LanguageSwitch />
+          <ThemeSwitch />
+        </div>
       </div>
     </div>
   );

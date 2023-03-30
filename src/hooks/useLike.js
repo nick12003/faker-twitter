@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 import useCurrentUser from './useCurrentUser';
@@ -38,9 +39,9 @@ const useLike = ({ postId, userId }) => {
       mutateFetchedPost();
       mutateFetchedPosts();
 
-      toast.success('Success');
+      toast.success(t('message.liked'));
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error(t('message.error'));
     }
   }, [currentUser, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost, loginModal]);
 

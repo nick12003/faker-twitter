@@ -1,4 +1,5 @@
 import { signOut } from 'next-auth/react';
+import { useTranslation } from 'next-i18next';
 import { BiLogOut } from 'react-icons/bi';
 import { BsHouseFill, BsBellFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
@@ -10,24 +11,25 @@ import SidebarLogo from './SidebarLogo';
 import SidebarTweetButton from './SidebarTweetButton';
 
 const Sidebar = () => {
+  const { t } = useTranslation(['common']);
   const { data: currentUser } = useCurrentUser();
 
   const items = [
     {
       icon: BsHouseFill,
-      label: 'Home',
+      label: t('nav.home'),
       href: '/',
     },
     {
       icon: BsBellFill,
-      label: 'Notifications',
+      label: t('nav.notifications'),
       href: '/notifications',
       auth: true,
       alert: currentUser?.hasNotification,
     },
     {
       icon: FaUser,
-      label: 'Profile',
+      label: t('nav.profile'),
       href: `/users/${currentUser?.id}`,
       auth: true,
     },
@@ -48,7 +50,9 @@ const Sidebar = () => {
               label={item.label}
             />
           ))}
-          {currentUser && <SidebarItem onClick={() => signOut()} icon={BiLogOut} label="Logout" />}
+          {currentUser && (
+            <SidebarItem onClick={() => signOut()} icon={BiLogOut} label={t('nav.logout')} />
+          )}
           <SidebarTweetButton />
         </div>
       </div>

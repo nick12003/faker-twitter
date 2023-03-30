@@ -1,5 +1,6 @@
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import axios from 'axios';
-import { useCallback, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 
@@ -10,6 +11,7 @@ import Input from '../Input';
 import Modal from '../Modal';
 
 const RegisterModal = () => {
+  const { t } = useTranslation(['common']);
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
@@ -19,6 +21,13 @@ const RegisterModal = () => {
   const [name, setName] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+    setUsername('');
+    setName('');
+  }, [registerModal.isOpen]);
 
   const onSubmit = useCallback(async () => {
     try {
@@ -33,7 +42,7 @@ const RegisterModal = () => {
 
       setIsLoading(false);
 
-      toast.success('Account created.');
+      toast.success(t('message.created'));
 
       signIn('credentials', {
         email,
@@ -42,7 +51,7 @@ const RegisterModal = () => {
 
       registerModal.onClose();
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error(t('message.error'));
     } finally {
       setIsLoading(false);
     }
@@ -65,25 +74,25 @@ const RegisterModal = () => {
     <div className="flex flex-col gap-4">
       <Input
         disabled={isLoading}
-        placeholder="Email"
+        placeholder={t('modal.emailPlaceholder')}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <Input
         disabled={isLoading}
-        placeholder="Name"
+        placeholder={t('modal.namePlaceholder')}
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <Input
         disabled={isLoading}
-        placeholder="Username"
+        placeholder={t('modal.usernamePlaceholder')}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <Input
         disabled={isLoading}
-        placeholder="Password"
+        placeholder={t('modal.passwordPlaceholder')}
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -94,16 +103,9 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="text-neutral-400 text-center mt-4">
       <p>
-        Already have an account?{' '}
-        <span
-          onClick={onToggle}
-          className="
-            text-white 
-            cursor-pointer 
-            hover:underline
-          "
-        >
-          Sign in
+        {t('modal.alreadyAccount')}{' '}
+        <span onClick={onToggle} className="cursor-pointer hover:underline text-primary">
+          {t('modal.signIn')}
         </span>
       </p>
     </div>
@@ -113,8 +115,8 @@ const RegisterModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={registerModal.isOpen}
-      title="Login"
-      actionLabel="Sign in"
+      title={t('modal.registerTitle')}
+      actionLabel={t('registerBtn')}
       onClose={registerModal.onClose}
       onSubmit={onSubmit}
       body={bodyContent}

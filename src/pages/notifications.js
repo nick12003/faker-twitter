@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import NotificationsFeed from '@/components/NotificationsFeed';
 
@@ -17,6 +18,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       session,
+      ...(await serverSideTranslations(context.locale, ['common'])),
     },
   };
 }

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.border-color{
+  @apply border-borderLight dark:border-borderDark
+}
+
+.item-hover {
+  @apply hover:bg-itemHoverLight dark:hover:bg-itemHoverDark cursor-pointer
+}
+
+.nav-hover {
+  @apply group-hover/nav:bg-itemHoverLight dark:group-hover/nav:bg-itemHoverDark cursor-pointer
+}
