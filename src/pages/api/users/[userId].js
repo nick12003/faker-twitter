@@ -26,6 +26,10 @@ export default async function handler(req, res) {
       },
     });
 
+    if (!existingUser) {
+      return res.status(200).json({ notFound: true });
+    }
+
     return res.status(200).json({ ...existingUser, followersCount });
   } catch (error) {
     console.error('\x1b[31m%s\x1b[0m', error);

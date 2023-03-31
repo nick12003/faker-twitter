@@ -10,7 +10,8 @@
     "notifications": "Notifications",
     "profile": "Profile",
     "tweet": "Tweet",
-    "logout": "Logout"
+    "logout": "Logout",
+    "notFound": "Page not found"
   },
   "credentials": {
     "missingField": "Missing field",
@@ -49,13 +50,17 @@
   "post": {
     "welcome": "Welcome to Twitter",
     "tweetPlaceholder": "What's happening？",
-    "replyPlaceholder": "Tweet your reply"
+    "replyPlaceholder": "Tweet your reply",
+    "notFound": "This post doesn’t exist",
+    "searchOther": "Try searching for another."
   },
   "profile": {
     "edit": "Edit",
     "joined": "Joined",
     "following": "Following",
-    "followers": "Followers"
+    "followers": "Followers",
+    "notFound": "This account doesn’t exist",
+    "searchOther": "Try searching for another."
   },
   "follow": {
     "who2Follow": "Who to follow"

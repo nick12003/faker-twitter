@@ -29,6 +29,10 @@ export default async function handler(req, res) {
       },
     });
 
+    if (!post) {
+      return res.status(200).json({ notFound: true });
+    }
+
     return res.status(200).json(post);
   } catch (error) {
     console.error('\x1b[31m%s\x1b[0m', error);

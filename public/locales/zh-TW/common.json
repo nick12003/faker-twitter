@@ -10,7 +10,8 @@
     "notifications": "通知",
     "profile": "個人資料",
     "tweet": "推文",
-    "logout": "登出"
+    "logout": "登出",
+    "notFound": "找不到此頁面"
   },
   "credentials": {
     "missingField": "缺少欄位",
@@ -49,13 +50,17 @@
   "post": {
     "welcome": "歡迎使用Twitter",
     "tweetPlaceholder": "有什麼新鮮事？",
-    "replyPlaceholder": "推你的回覆"
+    "replyPlaceholder": "推你的回覆",
+    "notFound": "此貼文不存在",
+    "searchOther": "嘗試搜尋其他項目。"
   },
   "profile": {
     "edit": "編輯",
     "joined": "已加入",
     "following": "個跟隨中",
-    "followers": "位跟隨者"
+    "followers": "位跟隨者",
+    "notFound": "此帳戶不存在",
+    "searchOther": "嘗試搜尋其他項目。"
   },
   "follow": {
     "who2Follow": "跟隨誰"

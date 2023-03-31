@@ -1,12 +1,8 @@
 import Image from 'next/image';
 
-import useUser from '@/hooks/useUser';
-
 import Avatar from '../Avatar';
 
-const UserHero = ({ userId }) => {
-  const { data: fetchedUser } = useUser(userId);
-
+const UserHero = ({ fetchedUser }) => {
   return (
     <div>
       <div className="bg-neutral-700 h-44 relative">
@@ -19,7 +15,7 @@ const UserHero = ({ userId }) => {
           />
         )}
         <div className="absolute -bottom-16 left-4">
-          <Avatar userId={userId} isLarge hasBorder />
+          <Avatar userId={fetchedUser?.id} isLarge hasBorder />
         </div>
       </div>
     </div>

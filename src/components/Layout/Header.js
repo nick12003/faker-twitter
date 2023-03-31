@@ -28,6 +28,11 @@ const labelMap = [
     showBackArrow: true,
     label: 'nav.tweet',
   },
+  {
+    path: '/404',
+    showBackArrow: true,
+    label: 'nav.notFound',
+  },
 ];
 
 const Header = () => {
@@ -55,7 +60,7 @@ const Header = () => {
           />
         )}
         <h1 className="text-xl font-semibold">
-          {labelInfo?.label ? t(labelInfo.label) : fetchedUser?.name}
+          {labelInfo?.label ? t(labelInfo.label) : fetchedUser?.name ?? t('nav.profile')}
         </h1>
         <div className="ml-auto">
           <LanguageSwitch />
