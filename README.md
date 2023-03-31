@@ -35,7 +35,7 @@
 
 1. 至[MongoDb Atlas](https://www.mongodb.com/cloud)註冊並建立一個資料庫，取得該資料庫的連線資訊
 
-   > 該專案使用 prisma 串接 mongoDB Atlas，如需更換 DB 種類需注意 schema 是否有不支援的 fuction
+   > 該專案使用 prisma 串接 mongoDB Atlas，如需更換 DB 種類需注意 schema 是否有不支援的 function
 
 2. 申請[Imgur API](https://apidocs.imgur.com/)，並且取得`Client ID`、`Album ID`、`Access token`，詳細可以參考[超完整 Express Imgur 套件上傳教學](https://israynotarray.com/nodejs/20220517/432259079/)
 
@@ -49,7 +49,7 @@
 ## 增加連線字串
 DATABASE_URL=${your db connection string}
 
-## next-auth加密資訊(內容可以隨便自訂)
+## next-auth加密資訊
 NEXT_AUTH_JWT_SECRET="NEXT_AUTH_JWT_SECRET"
 NEXT_AUTH_SECRET="NEXT_AUTH_SECRET"
 
@@ -57,11 +57,11 @@ NEXT_AUTH_SECRET="NEXT_AUTH_SECRET"
 ## api url
 NEXT_IMGUR_API_URL='https://api.imgur.com/3/image'
 ## Album ID
-NEXT_IMGUR_CLIENT_ID="8e54b0d6c3b6937"
+NEXT_IMGUR_CLIENT_ID=
 ## Access token
-NEXT_IMGUR_ACCESS_TOKEN="de1fadc6c3c01a85bd23b88cc9c74ac27d22c599"
+NEXT_IMGUR_ACCESS_TOKEN=
 ## 相簿 ID
-NEXT_IMGUR_ALBUM_ID="n7yRQ6g"
+NEXT_IMGUR_ALBUM_ID=
 ```
 
 2. 啟動
