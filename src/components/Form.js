@@ -44,7 +44,7 @@ const Form = ({ placeholder, isComment, postId }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts, isComment, postId, mutatePost]);
+  }, [body, mutatePosts, isComment, postId, mutatePost, t]);
 
   return (
     <div className="border-b-[1px] border-color px-5 py-2">

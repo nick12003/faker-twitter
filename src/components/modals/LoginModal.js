@@ -55,7 +55,7 @@ const LoginModal = () => {
         setIsLoading(false);
       }
     },
-    [loginModal]
+    [loginModal, t]
   );
 
   const handleSubmit = () => {

@@ -64,21 +64,17 @@ const RegisterModal = () => {
         setIsLoading(false);
       }
     },
-    [registerModal]
+    [registerModal, t]
   );
 
-  const onToggle = useCallback(
-    () => {
-      if (isLoading) {
-        return;
-      }
+  const onToggle = useCallback(() => {
+    if (isLoading) {
+      return;
+    }
 
-      registerModal.onClose();
-      loginModal.onOpen();
-    },
-    [registerModal, isLoading],
-    loginModal
-  );
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [registerModal, isLoading, loginModal]);
 
   const handleSubmit = () => {
     formikRef?.current?.submitForm();

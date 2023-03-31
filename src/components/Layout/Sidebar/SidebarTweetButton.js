@@ -18,7 +18,7 @@ const SidebarTweetButton = () => {
     }
 
     router.push('/');
-  }, [router, status]);
+  }, [router, status, loginModal]);
 
   return (
     <button className="w-full group/tweet" onClick={onClick}>

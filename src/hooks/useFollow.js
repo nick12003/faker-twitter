@@ -46,7 +46,7 @@ const useFollow = (userId) => {
       console.error(error);
       toast.error(t('message.error'));
     }
-  }, [status, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal]);
+  }, [status, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal, t]);
 
   return {
     isFollowing,

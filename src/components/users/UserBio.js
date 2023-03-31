@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { format } from 'date-fns';
-import { zhCN, en } from 'date-fns/locale';
+import { zhCN, enUS } from 'date-fns/locale';
 import { useRouter } from 'next/router';
 import { BiCalendar } from 'react-icons/bi';
 
@@ -30,7 +30,7 @@ const UserBio = ({ fetchedUser }) => {
     const isEn = locale === 'en';
 
     return format(new Date(fetchedUser.createdAt), isEn ? 'MMMM yyyy' : 'yyyy年MM月', {
-      locale: isEn ? en : zhCN,
+      locale: isEn ? enUS : zhCN,
     });
   }, [fetchedUser?.createdAt, locale]);
 

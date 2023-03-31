@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { zhCN, en } from 'date-fns/locale';
+import { zhCN, enUS } from 'date-fns/locale';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useLike from '@/hooks/useLike';
@@ -49,7 +49,7 @@ const PostItem = ({ data = {}, userId }) => {
     const isEn = router.locale === 'en';
 
     return formatDistanceToNowStrict(new Date(data.createdAt), {
-      locale: isEn ? en : zhCN,
+      locale: isEn ? enUS : zhCN,
     });
   }, [data.createdAt, router.locale]);
 

@@ -72,7 +72,7 @@ const EditModal = () => {
         setIsLoading(false);
       }
     },
-    [editModal, mutateFetchedUser]
+    [editModal, mutateFetchedUser, mutateCurrentUser, t]
   );
 
   const handleSubmit = () => {
