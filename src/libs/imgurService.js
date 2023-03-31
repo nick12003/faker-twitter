@@ -23,7 +23,7 @@ export const uploadImage = async (file) => {
   try {
     const result = await axios.post('/', formData, {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_IMGUR_ACCESS_TOKE}`,
+        Authorization: `Bearer ${process.env.NEXT_IMGUR_ACCESS_TOKEN}`,
         ...formData.getHeaders(),
       },
     });

@@ -1,38 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# faker-twitter
 
-## Getting Started
+![image](https://user-images.githubusercontent.com/34929382/229097034-a3c634b0-3512-40c0-8bac-f5510ec27a54.png)
 
-First, run the development server:
+簡單的仿 twitter 社交平台
+
+功能
+
+- 登入系統
+- 推文系統(可回覆推文)
+- 通知系統(有人按讚或追蹤時)
+- 多國語系(中英切換)
+- DarkMode
+
+使用的技術
+
+- [Next.js](https://github.com/vercel/next.js) - 建構框架
+- [next-auth](https://github.com/nextauthjs/next-auth) - 登入驗證
+- [next-i18next](https://github.com/i18next/next-i18next) - 多國語系
+- [next-themes](https://github.com/pacocoursey/next-themes) - 切換 DarkMode
+- [prisma](https://github.com/prisma/prisma) - 與資料庫界接
+- [swr](https://github.com/vercel/swr) - API 緩存
+- [axios](https://github.com/axios/axios) - API 工具
+- [Formik](https://github.com/jaredpalmer/formik)、[yup](https://github.com/jquense/yup) - 表單驗證
+- [zustand](https://github.com/pmndrs/zustand) - modal 狀態控制
+- [tailwindcss](https://github.com/tailwindlabs/tailwindcss) - CSS
+- [imgur](https://apidocs.imgur.com/) - 圖片上傳空間
+
+其他
+
+- 該專案使用 prisma 串接 mongoDB Atlas，如需更換 DB 需注意 schema 是否有不支援的 fuction
+- 使用 imgur 作為圖片空間
+
+## 事前準備
+
+1. 至[MongoDb Atlas](https://www.mongodb.com/cloud)註冊並建立一個資料庫，取得該資料庫的連線資訊
+
+   > 該專案使用 prisma 串接 mongoDB Atlas，如需更換 DB 種類需注意 schema 是否有不支援的 fuction
+
+2. 申請[Imgur API](https://apidocs.imgur.com/)，並且取得`Client ID`、`Album ID`、`Access token`，詳細可以參考[超完整 Express Imgur 套件上傳教學](https://israynotarray.com/nodejs/20220517/432259079/)
+
+## 使用
+
+1. 新增環境變數
+
+新增檔案 `.env` or `.env.local`
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## 增加連線字串
+DATABASE_URL=${your db connection string}
+
+## next-auth加密資訊(內容可以隨便自訂)
+NEXT_AUTH_JWT_SECRET="NEXT_AUTH_JWT_SECRET"
+NEXT_AUTH_SECRET="NEXT_AUTH_SECRET"
+
+## Imgur相關資訊
+## api url
+NEXT_IMGUR_API_URL='https://api.imgur.com/3/image'
+## Album ID
+NEXT_IMGUR_CLIENT_ID="8e54b0d6c3b6937"
+## Access token
+NEXT_IMGUR_ACCESS_TOKEN="de1fadc6c3c01a85bd23b88cc9c74ac27d22c599"
+## 相簿 ID
+NEXT_IMGUR_ALBUM_ID="n7yRQ6g"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. 啟動
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+## 安裝依賴
+npm install
+## 初始化prisma服務
+npx prisma generate
+## 啟動
+npm run dev
+```
