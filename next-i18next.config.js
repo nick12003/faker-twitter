@@ -4,4 +4,5 @@ module.exports = {
     defaultLocale: 'zh-TW',
   },
   react: { useSuspense: false },
+  localePath: path.resolve('./public/locales'),
 };
