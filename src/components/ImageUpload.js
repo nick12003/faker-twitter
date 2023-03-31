@@ -5,11 +5,11 @@ import Image from 'next/image';
 
 const ImageUpload = ({ onChange, label, value, disabled }) => {
   const { t } = useTranslation(['common']);
-  const [base64, setBase64] = useState(value);
+  const [imgSrc, setImgSrc] = useState(value);
 
   const handleChange = useCallback(
-    (base64) => {
-      onChange(base64);
+    (file) => {
+      onChange(file);
     },
     [onChange]
   );
@@ -17,10 +17,11 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
   const handleDrop = useCallback(
     (files) => {
       const file = files[0];
+      handleChange(file);
+      // 轉為base64預覽
       const reader = new FileReader();
       reader.onload = (event) => {
-        setBase64(event.target.result);
-        handleChange(event.target.result);
+        setImgSrc(event.target.result);
       };
       reader.readAsDataURL(file);
     },
@@ -44,9 +45,9 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
       })}
     >
       <input {...getInputProps()} />
-      {base64 ? (
+      {imgSrc ? (
         <div className="flex items-center justify-center">
-          <Image src={base64} height="100" width="100" alt={t('modal.uploadImgAlt')} />
+          <Image src={imgSrc} height="100" width="100" alt={t('modal.uploadImgAlt')} />
         </div>
       ) : (
         <p>{label}</p>

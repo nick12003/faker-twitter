@@ -10,9 +10,9 @@ const UserHero = ({ userId }) => {
   return (
     <div>
       <div className="bg-neutral-700 h-44 relative">
-        {fetchedUser?.coverImage && (
+        {fetchedUser?.coverImageInfo?.link && (
           <Image
-            src={fetchedUser.coverImage}
+            src={fetchedUser.coverImageInfo.link}
             fill
             alt="Cover Image"
             style={{ objectFit: 'cover' }}

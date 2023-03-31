@@ -17,15 +17,22 @@ const EditModal = () => {
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
   const editModal = useEditModal();
 
+  /**
+   * 從資料庫傳來的是url，但要修改時要先將img file upload到雲端圖庫，再將雲端圖庫的url存至資料庫
+   */
   const [profileImage, setProfileImage] = useState('');
   const [coverImage, setCoverImage] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [coverImageUrl, setCoverImageUrl] = useState('');
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
 
   useEffect(() => {
-    setProfileImage(currentUser?.profileImage);
-    setCoverImage(currentUser?.coverImage);
+    setProfileImageUrl(currentUser?.profileImageInfo?.link);
+    setProfileImage('');
+    setCoverImageUrl(currentUser?.coverImageInfo?.link);
+    setCoverImage('');
     setName(currentUser?.name);
     setUsername(currentUser?.username);
     setBio(currentUser?.bio);
@@ -33,8 +40,8 @@ const EditModal = () => {
     currentUser?.name,
     currentUser?.username,
     currentUser?.bio,
-    currentUser?.profileImage,
-    currentUser?.coverImage,
+    currentUser?.profileImageInfo?.link,
+    currentUser?.coverImageInfo?.link,
     editModal.isOpen,
   ]);
 
@@ -44,7 +51,19 @@ const EditModal = () => {
     try {
       setIsLoading(true);
 
-      await axios.patch('/api/edit', { name, username, bio, profileImage, coverImage });
+      // 如果值為null或undefined會被轉換成字串，所以最好是所有的default都為空字串
+      var formData = new FormData();
+      formData.append('name', name);
+      formData.append('username', username);
+      formData.append('bio', bio);
+      formData.append('profileImage', profileImage);
+      formData.append('profileDeleteHash', currentUser?.profileImageInfo?.deletehash ?? '');
+      formData.append('coverImage', coverImage);
+      formData.append('coverDeleteHash', profileImage?.coverImageInfo?.deletehash ?? '');
+
+      await axios.patch('/api/edit', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       mutateFetchedUser();
 
       toast.success(t('message.updated'));
@@ -60,13 +79,13 @@ const EditModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <ImageUpload
-        value={profileImage}
+        value={profileImageUrl}
         disabled={isLoading}
         onChange={(image) => setProfileImage(image)}
         label={t('modal.profileImagePlaceholder')}
       />
       <ImageUpload
-        value={coverImage}
+        value={coverImageUrl}
         disabled={isLoading}
         onChange={(image) => setCoverImage(image)}
         label={t('modal.coverImagePlaceholder')}

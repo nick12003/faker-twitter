@@ -1,5 +1,9 @@
+import formidable from 'formidable';
+
 import serverAuth from '@/libs/serverAuth';
 import prisma from '@/libs/prismadb';
+
+import { uploadImage, deleteImage } from '@/libs/imgurService';
 
 export default async function handler(req, res) {
   if (req.method !== 'PATCH') {
@@ -9,10 +13,34 @@ export default async function handler(req, res) {
   try {
     const { currentUser } = await serverAuth(req);
 
-    const { name, username, bio, profileImage, coverImage } = req.body;
+    const form = formidable({ multiples: true });
+
+    const formData = new Promise((resolve, reject) => {
+      form.parse(req, async (err, fields, files) => {
+        if (err) {
+          reject('error');
+        }
+        resolve({ fields, files });
+      });
+    });
+
+    const {
+      fields: { name, username, bio, profileDeleteHash, coverDeleteHash },
+      files: { profileImage, coverImage },
+    } = await formData;
 
     if (!name || !username) {
       throw new Error('Missing fields');
+    }
+
+    const profileImageInfo = await uploadImage(profileImage);
+    if (profileImageInfo && profileDeleteHash) {
+      await deleteImage(profileDeleteHash);
+    }
+
+    const coverImageInfo = await uploadImage(coverImage);
+    if (coverImageInfo && coverDeleteHash) {
+      await deleteImage(coverDeleteHash);
     }
 
     const updatedUser = await prisma.user.update({
@@ -23,8 +51,7 @@ export default async function handler(req, res) {
         name,
         username,
         bio,
-        profileImage,
-        coverImage,
+        ...{ profileImageInfo, coverImageInfo },
       },
     });
 
@@ -34,3 +61,9 @@ export default async function handler(req, res) {
     return res.status(400).end();
   }
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

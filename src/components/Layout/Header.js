@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <div className="border-b-[1px] border-color backdrop-blur p-5 sticky top-0 z-10">
       <div className="flex flex-row items-center justify-between gap-2">
-        {labelInfo.showBackArrow && (
+        {labelInfo?.showBackArrow && (
           <BiArrowBack
             onClick={handleBack}
             size={20}
@@ -55,7 +55,7 @@ const Header = () => {
           />
         )}
         <h1 className="text-xl font-semibold">
-          {labelInfo.label ? t(labelInfo.label) : fetchedUser?.name}
+          {labelInfo?.label ? t(labelInfo.label) : fetchedUser?.name}
         </h1>
         <div className="ml-auto">
           <LanguageSwitch />
