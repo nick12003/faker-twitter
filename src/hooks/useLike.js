@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+import { useTranslation } from 'next-i18next';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
@@ -9,6 +10,7 @@ import usePost from './usePost';
 import usePosts from './usePosts';
 
 const useLike = ({ postId, userId }) => {
+  const { t } = useTranslation(['common']);
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
@@ -46,7 +48,7 @@ const useLike = ({ postId, userId }) => {
       console.error(error);
       toast.error(t('message.error'));
     }
-  }, [status, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost, loginModal]);
+  }, [status, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost, loginModal, t]);
 
   return {
     hasLiked,
