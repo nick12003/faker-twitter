@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
+import { Formik, FastField } from 'formik';
+import * as yup from 'yup';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
@@ -9,38 +11,50 @@ import useRegisterModal from '@/hooks/useRegisterModal';
 import Input from '../Input';
 import Modal from '../Modal';
 
+const validSchema = yup.object().shape({
+  email: yup.string().required(),
+  password: yup.string().required(),
+});
+
+const initialValues = {
+  email: '',
+  password: '',
+};
+
 const LoginModal = () => {
   const { t } = useTranslation(['common']);
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const formikRef = useRef(null);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setEmail('');
-    setPassword('');
-  }, [LoginModal.isOpen]);
+  const onSubmit = useCallback(
+    async ({ email, password }) => {
+      try {
+        setIsLoading(true);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      setIsLoading(true);
+        await signIn('credentials', {
+          email,
+          password,
+        });
 
-      await signIn('credentials', {
-        email,
-        password,
-      });
+        toast.success(t('message.loggedIn'));
 
-      toast.success(t('message.loggedIn'));
+        loginModal.onClose();
+      } catch (error) {
+        toast.error(t('message.error'));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [loginModal]
+  );
 
-      loginModal.onClose();
-    } catch (error) {
-      toast.error(t('message.error'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [email, password, loginModal]);
+  const handleSubmit = () => {
+    formikRef?.current?.submitForm();
+  };
 
   const onToggle = useCallback(() => {
     loginModal.onClose();
@@ -49,19 +63,48 @@ const LoginModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Input
-        placeholder={t('modal.emailPlaceholder')}
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        disabled={isLoading}
-      />
-      <Input
-        placeholder={t('modal.passwordPlaceholder')}
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        disabled={isLoading}
-      />
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={validSchema}
+        innerRef={formikRef}
+        onSubmit={onSubmit}
+      >
+        {({ submitForm, setFieldValue }) => {
+          return (
+            <>
+              <FastField name="email">
+                {({ field, meta: { touched, error } }) => (
+                  <Input
+                    label={t('modal.emailPlaceholder')}
+                    onChange={(e) => setFieldValue(field.name, e.target.value)}
+                    error={!!touched && !!error}
+                    value={field.value}
+                    disabled={isLoading}
+                  />
+                )}
+              </FastField>
+              <FastField name="password">
+                {({ field, meta: { touched, error } }) => (
+                  <Input
+                    label={t('modal.passwordPlaceholder')}
+                    type="password"
+                    onChange={(e) => setFieldValue(field.name, e.target.value)}
+                    error={!!touched && !!error}
+                    value={field.value}
+                    disabled={isLoading}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        submitForm();
+                      }
+                    }}
+                  />
+                )}
+              </FastField>
+            </>
+          );
+        }}
+      </Formik>
     </div>
   );
 
@@ -83,7 +126,7 @@ const LoginModal = () => {
       title={t('modal.loginTitle')}
       actionLabel={t('signInBtn')}
       onClose={loginModal.onClose}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       body={bodyContent}
       footer={footerContent}
     />
