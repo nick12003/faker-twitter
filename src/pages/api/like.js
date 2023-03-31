@@ -56,7 +56,7 @@ export default async function handler(req, res) {
           });
         }
       } catch (error) {
-        console.log(error);
+        console.error('\x1b[31m%s\x1b[0m', error);
       }
       // NOTIFICATION PART END
     }
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json(updatedPost);
   } catch (error) {
-    console.log(error);
+    console.error('\x1b[31m%s\x1b[0m', error);
     return res.status(400).end();
   }
 }

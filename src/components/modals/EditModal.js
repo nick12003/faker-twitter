@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'next-i18next';
 import { toast } from 'react-hot-toast';
@@ -66,6 +66,7 @@ const EditModal = () => {
 
         editModal.onClose();
       } catch (error) {
+        console.error(error);
         toast.error(t('message.error'));
       } finally {
         setIsLoading(false);

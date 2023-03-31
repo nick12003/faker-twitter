@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
@@ -13,6 +13,8 @@ const useLike = ({ postId, userId }) => {
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
 
+  const { status } = useSession();
+
   const loginModal = useLoginModal();
 
   const hasLiked = useMemo(() => {
@@ -22,7 +24,7 @@ const useLike = ({ postId, userId }) => {
   }, [fetchedPost, currentUser]);
 
   const toggleLike = useCallback(async () => {
-    if (!currentUser) {
+    if (status !== 'authenticated') {
       return loginModal.onOpen();
     }
 
@@ -41,9 +43,10 @@ const useLike = ({ postId, userId }) => {
 
       toast.success(t('message.liked'));
     } catch (error) {
+      console.error(error);
       toast.error(t('message.error'));
     }
-  }, [currentUser, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost, loginModal]);
+  }, [status, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost, loginModal]);
 
   return {
     hasLiked,

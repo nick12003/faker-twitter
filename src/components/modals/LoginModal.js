@@ -35,16 +35,22 @@ const LoginModal = () => {
       try {
         setIsLoading(true);
 
-        await signIn('credentials', {
+        const { error, ok } = await signIn('credentials', {
+          redirect: false,
           email,
           password,
         });
+
+        if (!ok) {
+          throw new Error(t(`credentials.${error}`));
+        }
 
         toast.success(t('message.loggedIn'));
 
         loginModal.onClose();
       } catch (error) {
-        toast.error(t('message.error'));
+        console.error(error);
+        toast.error(error.message ? error.message : t('message.error'));
       } finally {
         setIsLoading(false);
       }

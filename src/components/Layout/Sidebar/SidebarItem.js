@@ -1,16 +1,15 @@
 import React, { useCallback } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BsDot } from 'react-icons/bs';
 
 import useLoginModal from '@/hooks/useLoginModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
 
 const SidebarItem = ({ label, icon: Icon, href, auth, onClick, alert }) => {
   const router = useRouter();
   const loginModal = useLoginModal();
-
-  const { data: currentUser } = useCurrentUser();
+  const { status } = useSession();
 
   const handleClick = useCallback(
     (event) => {
@@ -20,13 +19,13 @@ const SidebarItem = ({ label, icon: Icon, href, auth, onClick, alert }) => {
         return onClick();
       }
 
-      if (auth && !currentUser) {
+      if (auth && status !== 'authenticated') {
         loginModal.onOpen();
       } else if (href) {
         router.push(href);
       }
     },
-    [router, href, auth, loginModal, onClick, currentUser]
+    [router, href, auth, loginModal, onClick, status]
   );
 
   const Dot = () =>

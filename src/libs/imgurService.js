@@ -41,7 +41,7 @@ export const uploadImage = async (file) => {
       type: data.type,
     };
   } catch (error) {
-    console.log(error);
+    console.error('\x1b[31m%s\x1b[0m', error);
     throw new Error('UpLoad image error');
   }
 };
@@ -60,7 +60,7 @@ export const deleteImage = async (imageDeleteHash) => {
 
     return true;
   } catch (error) {
-    console.log(error);
+    console.error('\x1b[31m%s\x1b[0m', error);
     throw new Error('UpLoad image error');
   }
 };

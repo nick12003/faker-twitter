@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslation } from 'next-i18next';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -12,6 +13,8 @@ const useFollow = (userId) => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(userId);
 
+  const { status } = useSession();
+
   const loginModal = useLoginModal();
 
   const isFollowing = useMemo(() => {
@@ -21,7 +24,7 @@ const useFollow = (userId) => {
   }, [currentUser, userId]);
 
   const toggleFollow = useCallback(async () => {
-    if (!currentUser) {
+    if (status !== 'authenticated') {
       return loginModal.onOpen();
     }
 
@@ -40,9 +43,10 @@ const useFollow = (userId) => {
 
       toast.success(t('message.followed'));
     } catch (error) {
+      console.error(error);
       toast.error(t('message.error'));
     }
-  }, [currentUser, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal]);
+  }, [status, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal]);
 
   return {
     isFollowing,

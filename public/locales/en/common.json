@@ -12,6 +12,11 @@
     "tweet": "Tweet",
     "logout": "Logout"
   },
+  "credentials": {
+    "missingField": "Missing field",
+    "notFoundUser": "Account not found",
+    "incorrectPassword": "Incorrect password"
+  },
   "message": {
     "updated": "Updated",
     "loggedIn": "Logged in",

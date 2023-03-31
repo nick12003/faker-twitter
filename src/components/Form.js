@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import usePosts from '@/hooks/usePosts';
 import usePost from '@/hooks/usePost';
 
@@ -18,7 +18,8 @@ const Form = ({ placeholder, isComment, postId }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
 
-  const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUser();
+  const { data: session, status } = useSession();
+
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutatePost } = usePost(postId);
 
@@ -38,6 +39,7 @@ const Form = ({ placeholder, isComment, postId }) => {
       mutatePosts();
       mutatePost();
     } catch (error) {
+      console.error(error);
       toast.error(t('message.error'));
     } finally {
       setIsLoading(false);
@@ -46,14 +48,14 @@ const Form = ({ placeholder, isComment, postId }) => {
 
   return (
     <div className="border-b-[1px] border-color px-5 py-2">
-      {isCurrentUserLoading ? (
+      {status === 'loading' ? (
         <Spinner />
       ) : (
         <>
-          {currentUser ? (
+          {status === 'authenticated' ? (
             <div className="flex flex-row gap-4">
               <div>
-                <Avatar userId={currentUser?.id} />
+                <Avatar userId={session.user.id} />
               </div>
               <div className="w-full">
                 <textarea

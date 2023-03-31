@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { zhCN, en } from 'date-fns/locale';
 
 import useLoginModal from '@/hooks/useLoginModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import useLike from '@/hooks/useLike';
 
 import Avatar from '../Avatar';
@@ -13,8 +13,7 @@ import Avatar from '../Avatar';
 const PostItem = ({ data = {}, userId }) => {
   const router = useRouter();
   const loginModal = useLoginModal();
-
-  const { data: currentUser } = useCurrentUser();
+  const { status } = useSession();
   const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
 
   const goToUser = useCallback(
@@ -33,13 +32,13 @@ const PostItem = ({ data = {}, userId }) => {
     async (event) => {
       event.stopPropagation();
 
-      if (!currentUser) {
+      if (status !== 'authenticated') {
         return loginModal.onOpen();
       }
 
       toggleLike();
     },
-    [loginModal, currentUser, toggleLike]
+    [loginModal, status, toggleLike]
   );
 
   const createdAt = useMemo(() => {

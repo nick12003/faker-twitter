@@ -16,7 +16,7 @@ export default NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials');
+          throw new Error('missingField');
         }
 
         const user = await prisma.user.findUnique({
@@ -26,16 +26,17 @@ export default NextAuth({
         });
 
         if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error('notFoundUser');
         }
 
         const isCorrectPassword = await bcrypt.compare(credentials.password, user.hashedPassword);
 
         if (!isCorrectPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error('incorrectPassword');
         }
 
-        return user;
+        // 讓jwt的image讀取個人頭像，預設null
+        return { ...user, image: user?.profileImageInfo?.link ?? null };
       },
     }),
   ],
@@ -44,7 +45,33 @@ export default NextAuth({
     strategy: 'jwt',
   },
   jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
+    secret: process.env.NEXT_AUTH_JWT_SECRET,
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXT_AUTH_SECRET,
+  logger: {
+    error(code, metadata) {
+      console.error(code, metadata);
+    },
+  },
+  callbacks: {
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+      };
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+        };
+      }
+
+      return token;
+    },
+  },
 });

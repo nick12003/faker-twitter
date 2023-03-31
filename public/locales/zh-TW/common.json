@@ -12,6 +12,11 @@
     "tweet": "推文",
     "logout": "登出"
   },
+  "credentials": {
+    "missingField": "缺少欄位",
+    "notFoundUser": "查無帳號",
+    "incorrectPassword": "錯誤密碼"
+  },
   "message": {
     "updated": "修改成功",
     "loggedIn": "登入成功",

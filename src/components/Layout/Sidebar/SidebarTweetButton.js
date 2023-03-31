@@ -1,25 +1,24 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 import { FaFeather } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
 import useLoginModal from '@/hooks/useLoginModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
 
 const SidebarTweetButton = () => {
   const { t } = useTranslation(['common']);
   const router = useRouter();
+  const { status } = useSession();
   const loginModal = useLoginModal();
 
-  const { data: currentUser } = useCurrentUser();
-
   const onClick = useCallback(() => {
-    if (!currentUser) {
+    if (status !== 'authenticated') {
       return loginModal.onOpen();
     }
 
     router.push('/');
-  }, [router]);
+  }, [router, status]);
 
   return (
     <button className="w-full group/tweet" onClick={onClick}>
